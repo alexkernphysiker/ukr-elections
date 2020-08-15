@@ -108,7 +108,7 @@ def prepare_data(source, attendance, candidates):
                 index=int(att*100)
                 if index>=0 and index<100:
                     for c in voices.keys():
-                        voices[c][index] += float(row[candidates[c]])/1000000.0
+                        voices[c][index] += float(row[candidates[c]])/1000.0
     return voices
 
 #for item in parse_election_tvk_data("vp2014","wp335pt001f01=702",ua):
