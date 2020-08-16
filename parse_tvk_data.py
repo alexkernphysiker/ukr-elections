@@ -93,6 +93,7 @@ def parse_election_tvk_data(elect, page, region):
     for row in link_soup.find_all('a', href=True):
         try:
             if int(row.text) > 0:
+                #ToDo: check if the district belongs to a region
                 for item in parse_distr(row['href']):
                     yield item
         except:
