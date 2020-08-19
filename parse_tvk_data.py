@@ -34,7 +34,7 @@ chernivtsi={201,202,203,204}
 chernihiv={205,206,207,208,209,210}
 kyiv_city={211,212,213,214,215,216,217,218,219,220,221,222,223}
 sebastopol={224,225}
-
+foreign={333}
 
 west=zak|fra|lv|tern|khmel|chernivtsi|riv|vol
 center=vin|krop|cherk|pol|dp
@@ -42,7 +42,7 @@ north=zhy|kyiv_reg|chernihiv|sumy|kyiv_city
 east=dn|lg|kharkiv
 south=od|kherson|myk|zp|crimea|sebastopol
 ua=west|east|north|south|center
-
+all_districts=ua|foreign
 
 def parse_election_tvk_data(elect, page, region):
     old_merge_environment_settings = requests.Session.merge_environment_settings
@@ -90,12 +90,20 @@ def parse_election_tvk_data(elect, page, region):
                 pass
 
     link_soup = BeautifulSoup(get_page(elect,page),features="lxml")
-    for row in link_soup.find_all('a', href=True):
+    for row in link_soup.find_all('tr'):
         try:
-            if int(row.text) > 0:
-                #ToDo: check if the district belongs to a region
-                for item in parse_distr(row['href']):
-                    yield item
+            lnk=row.find('a',href=True)
+            if lnk:
+                if int(lnk.text) > 0:
+                    code=row.find('td')
+                    if code:
+                        try:
+                            code=int(code.text)
+                        except:
+                            code=333
+                        if code in region:
+                            for item in parse_distr(lnk['href']):
+                                yield item
         except:
             pass
 
@@ -111,6 +119,3 @@ def prepare_data(source, attendance, candidates):
                     for c in voices.keys():
                         voices[c][index] += float(row[candidates[c]])/1000.0
     return voices
-
-#for item in parse_election_tvk_data("vp2014","wp335pt001f01=702",ua):
-#    print(item)
