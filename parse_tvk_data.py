@@ -37,11 +37,11 @@ sebastopol={224,225}
 foreign={333}
 
 west=zak|fra|lv|tern|khmel|chernivtsi|riv|vol
-center=vin|krop|cherk|pol|dp
-north=zhy|kyiv_reg|chernihiv|sumy|kyiv_city
-east=dn|lg|kharkiv
+center=vin|krop|cherk|pol
+north=zhy|kyiv_reg|chernihiv|sumy
+east=dp|dn|lg|kharkiv
 south=od|kherson|myk|zp|crimea|sebastopol
-ua=west|east|north|south|center
+ua=west|east|north|south|center|kyiv_city
 all_districts=ua|foreign
 
 def parse_election_tvk_data(elect, page, region):
